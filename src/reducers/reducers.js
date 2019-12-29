@@ -1,4 +1,4 @@
-import { ADD_FEATURE, REMOVE_FEATURE } from '../actions/actions';
+import { ADD_FEATURE, REMOVE_FEATURE, UPDATE_CARS, UPDATE_ZIP } from '../actions/actions';
 
 const initialState = {
     additionalPrice: 0,
@@ -14,7 +14,8 @@ const initialState = {
         { id: 2, name: 'Racing detail package', price: 1500 },
         { id: 3, name: 'Premium sound system', price: 500 },
         { id: 4, name: 'Rear spoiler', price: 250 }
-    ]
+    ],
+    zip: 38016
 }
 
 function reducer(state = initialState, action) {
@@ -27,15 +28,33 @@ function reducer(state = initialState, action) {
                 additionalPrice: action.payload.price,
             }
         case REMOVE_FEATURE:
-            let newCar = newState.car;
-            newCar.features.filter((item) => item.name !== action.payload.name)
-            console.log(action.payload.name)
-            console.log(newCar.features[0].name)
-            // newCar.features.filter(item => console.log(item.name))
+            newState.car.features = newState.car.features.filter((item) => item.name !== action.payload.name)
             return {
                 ...newState,
-                car: newCar,
                 additionalPrice: newState.additionalPrice -= action.payload.price
+            }
+        case UPDATE_CARS:
+            const price = action.payload.price;
+            const make = action.payload.make;
+            const model = action.payload.model;
+            const year = action.payload.year;
+            const image = action.payload.image;
+            const newCar = {
+                price: price,
+                name: year + ' ' + make + ' ' + model,
+                image:
+                    image,
+                features: []
+            }
+            return { 
+                ...newState,
+                car: newCar
+                
+            }
+        case UPDATE_ZIP: 
+            return {
+                ...newState,
+                zip: action.payload
             }
         default: 
             return state;
