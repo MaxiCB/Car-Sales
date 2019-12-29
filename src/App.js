@@ -32,6 +32,7 @@ const App = (props) => {
 
   const updateZip = zip => {
     const update = props.updateZip;
+    console.log(zip);
     update(zip);
   }
 
@@ -60,6 +61,7 @@ const App = (props) => {
       {/* This updates the ZipCode correctly and fires the API call again. */}
       <button onClick={() => updateZip(38016)}>Testing</button>
       <button onClick={() => updateCar}>Testing</button>
+      <input onChange={(e) => updateZip(e.target.value)}></input>
     </div>
   );
 };
